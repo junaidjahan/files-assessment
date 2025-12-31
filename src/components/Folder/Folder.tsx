@@ -1,49 +1,52 @@
 import { Paper, Stack, Tabs } from "@mantine/core";
-import { useEffect, useState, type FC } from "react";
+import { useState, type FC } from "react";
+import type { Item, MenuOption } from "~/types";
+import { LAYOUT, VIEW_TABS } from "~/constants";
 import { FolderNavigation } from "./FolderNavigation";
+import { GridSkeleton } from "./Skeleton";
 
-type Item = {
-  id: number;
-  name: string;
-  type: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export const Folder = (props: {
-  data: Array<Item>;
+export interface FolderProps {
+  data: Item[];
   navTitle: string;
-  gridView: FC<any>;
-  tableView: FC<any>;
-  options?: Array<{ label: string; onClick: Function }>;
-}) => {
-  const [data, setData] = useState<any>();
-  const [activeTab, setActiveTab] = useState("grid");
+  gridView: FC<{ items?: Item[]; options?: MenuOption[] }>;
+  tableView: FC<{ items?: Item[]; options?: MenuOption[] }>;
+  options?: MenuOption[];
+  loading?: boolean;
+}
 
-  useEffect(() => {
-    setData(props.data);
-  }, [props]);
+export const Folder = ({
+  data,
+  navTitle,
+  gridView: GridView,
+  tableView: TableView,
+  options,
+  loading = false,
+}: FolderProps) => {
+  const [activeTab, setActiveTab] = useState<string>(VIEW_TABS.GRID);
 
-  let ViewComponent: any;
-  if (activeTab === "grid") {
-    ViewComponent = props.gridView;
-  } else {
-    ViewComponent = props.tableView;
-  }
+  const ViewComponent = activeTab === VIEW_TABS.GRID ? GridView : TableView;
 
   return (
-    <Paper p="md" style={{ margin: 20 }}>
-      <FolderNavigation title={props.navTitle} />
+    <Paper p="md" style={{ margin: LAYOUT.PAPER_MARGIN }}>
+      <FolderNavigation title={navTitle} />
 
-      <Tabs value={activeTab} onChange={(val) => setActiveTab(val as any)} style={{ marginTop: 20, marginBottom: 20 }}>
+      <Tabs
+        value={activeTab}
+        onChange={(val: string | null) => setActiveTab(val || VIEW_TABS.GRID)}
+        style={{ marginTop: 20, marginBottom: 20 }}
+      >
         <Tabs.List>
-          <Tabs.Tab value="grid">Grid View</Tabs.Tab>
-          <Tabs.Tab value="table">Table View</Tabs.Tab>
+          <Tabs.Tab value={VIEW_TABS.GRID}>Grid View</Tabs.Tab>
+          <Tabs.Tab value={VIEW_TABS.TABLE}>Table View</Tabs.Tab>
         </Tabs.List>
       </Tabs>
 
       <Stack>
-        <ViewComponent items={data} options={props.options} />
+        {loading ? (
+          <GridSkeleton />
+        ) : (
+          <ViewComponent items={data} options={options} />
+        )}
       </Stack>
     </Paper>
   );

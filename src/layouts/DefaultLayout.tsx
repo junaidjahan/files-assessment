@@ -1,29 +1,33 @@
-import { Outlet } from "react-router-dom";
-
+import { Outlet, Link, useLocation } from "react-router-dom";
 import { Button, Paper, Stack } from "@mantine/core";
+import { LAYOUT } from "~/constants";
 
 export const Sidebar = () => {
+  const location = useLocation();
+
   return (
     <Paper
       withBorder
       style={{
-        width: 200,
-        height: "100vh",
+        width: LAYOUT.SIDEBAR_WIDTH,
+        height: "100dvh",
         background: "#f9f9f9",
-        padding: 20,
+        padding: LAYOUT.SIDEBAR_PADDING,
       }}
     >
       <Stack>
         <Button
-          onClick={() => (window.location.href = "/")}
-          variant={window.location.pathname === "/" ? "filled" : "default"}
+          component={Link}
+          to="/"
+          variant={location.pathname === "/" ? "filled" : "default"}
         >
           Homepage
         </Button>
 
         <Button
-          onClick={() => (window.location.href = "/favorites")}
-          variant={window.location.pathname === "/favorites" ? "filled" : "default"}
+          component={Link}
+          to="/favorites"
+          variant={location.pathname === "/favorites" ? "filled" : "default"}
         >
           Favorites
         </Button>
@@ -46,7 +50,7 @@ export const DefaultLayout = () => {
 
       <div
         style={{
-          padding: 30,
+          padding: LAYOUT.CONTENT_PADDING,
           flex: 1,
         }}
       >

@@ -1,18 +1,37 @@
 import { ActionIcon, Paper, Text } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
+import type { Item, MenuOption } from "~/types";
+import { Z_INDEX } from "~/constants";
 
-export const FolderActions = (props: any) => {
+export interface FolderActionsProps {
+  item: Item;
+  options?: MenuOption[];
+}
+
+export const FolderActions = ({ item, options }: FolderActionsProps) => {
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.addEventListener("click", (e: any) => {
-      if (ref.current && !(ref.current as any).contains(e.target)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(false);
       }
-    });
-  });
+    };
+
+    if (open) {
+      document.addEventListener("click", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [open]);
+
+  if (!options || options.length === 0) {
+    return null;
+  }
 
   return (
     <div
@@ -31,7 +50,7 @@ export const FolderActions = (props: any) => {
         <IconDots size={24} />
       </ActionIcon>
 
-      {open ? (
+      {open && (
         <Paper
           withBorder
           shadow="md"
@@ -41,30 +60,28 @@ export const FolderActions = (props: any) => {
             right: 0,
             minWidth: 180,
             top: "100%",
-            zIndex: 999999,
+            zIndex: Z_INDEX.DROPDOWN,
             background: "white",
           }}
         >
-          {props.options.map((option: any, index: number) => {
-            return (
-              <Text
-                key={index}
-                size="sm"
-                style={{
-                  cursor: "pointer",
-                  padding: 4,
-                }}
-                onClick={() => {
-                  option.onClick(props.item);
-                  setOpen(false);
-                }}
-              >
-                {option.label}
-              </Text>
-            );
-          })}
+          {options?.map((option, index) => (
+            <Text
+              key={index}
+              size="sm"
+              style={{
+                cursor: "pointer",
+                padding: 4,
+              }}
+              onClick={() => {
+                option.onClick(item);
+                setOpen(false);
+              }}
+            >
+              {option.label}
+            </Text>
+          ))}
         </Paper>
-      ) : null}
+      )}
     </div>
   );
 };

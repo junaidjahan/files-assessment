@@ -1,7 +1,14 @@
 import { Card, Text, SimpleGrid, Group, Badge } from "@mantine/core";
+import type { Item, MenuOption } from "~/types";
+import { formatDateTime } from "~/utils";
 import { FolderActions } from "../FolderActions";
 
-export const GridView = ({ items, options }) => {
+export interface GridViewProps {
+  items?: Item[];
+  options?: MenuOption[];
+}
+
+export const GridView = ({ items, options }: GridViewProps) => {
   return (
     <SimpleGrid
       cols={{ base: 1, sm: 2, md: 3, lg: 4 }}
@@ -34,20 +41,10 @@ export const GridView = ({ items, options }) => {
           </Group>
 
           <Text size="sm" c="dimmed">
-            Created: {new Date(item.createdAt).toLocaleDateString("en-US")} at{" "}
-            {new Date(item.createdAt).toLocaleTimeString("en-US", {
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: true,
-            })}
+            Created: {formatDateTime(item.createdAt)}
           </Text>
           <Text size="sm" c="dimmed">
-            Updated: {new Date(item.updatedAt).toLocaleDateString("en-US")} at{" "}
-            {new Date(item.updatedAt).toLocaleTimeString("en-US", {
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: true,
-            })}
+            Updated: {formatDateTime(item.updatedAt)}
           </Text>
         </Card>
       ))}
