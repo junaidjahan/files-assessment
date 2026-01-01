@@ -1,5 +1,5 @@
 import { Paper, Stack, Tabs } from "@mantine/core";
-import { useState, type FC } from "react";
+import { useState } from "react";
 import type { Item, MenuOption } from "~/types";
 import { LAYOUT, VIEW_TABS } from "~/constants";
 import { FolderNavigation } from "./FolderNavigation";
@@ -8,8 +8,8 @@ import { GridSkeleton } from "./Skeleton";
 export interface FolderProps {
   data: Item[];
   navTitle: string;
-  gridView: FC<{ items?: Item[]; options?: MenuOption[] }>;
-  tableView: FC<{ items?: Item[]; options?: MenuOption[] }>;
+  gridView: (props: { items?: Item[]; options?: MenuOption[] }) => JSX.Element;
+  tableView: (props: { items?: Item[]; options?: MenuOption[] }) => JSX.Element;
   options?: MenuOption[];
   loading?: boolean;
 }

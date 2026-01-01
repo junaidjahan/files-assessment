@@ -1,48 +1,42 @@
-import { Folder } from "~/components";
-import { GridView, TableView } from "~/components/Folder/View";
+import { ItemsPage } from "~/components";
 import { API_ENDPOINTS } from "~/constants";
-import { useItems } from "~/hooks";
-import type { Item } from "~/types";
+import type { Item, MenuOption } from "~/types";
+
+const favoritesOptions: MenuOption[] = [
+  {
+    label: "Remove from Favorites",
+    onClick(item?: Item) {
+      if (item) {
+        alert(`${item.name} removed from Favorites`);
+      }
+    },
+  },
+  {
+    label: "Open item location",
+    onClick() {
+      alert("Opened");
+    },
+  },
+  {
+    label: "Share",
+    onClick() {
+      alert("Shared");
+    },
+  },
+  {
+    label: "Delete",
+    onClick() {
+      alert("Deleted");
+    },
+  },
+];
 
 export const Favorites = () => {
-  const { data, loading } = useItems(API_ENDPOINTS.ITEMS);
-  const options = [
-    {
-      label: "Remove from Favorites",
-      onClick(item?: Item) {
-        if (item) {
-          alert(`${item.name} removed from Favorites`);
-        }
-      },
-    },
-    {
-      label: "Open item location",
-      onClick() {
-        alert("Opened");
-      },
-    },
-    {
-      label: "Share",
-      onClick() {
-        alert("Shared");
-      },
-    },
-    {
-      label: "Delete",
-      onClick() {
-        alert("Deleted");
-      },
-    },
-  ];
-
   return (
-    <Folder
-      navTitle="Favorites"
-      data={data}
-      gridView={GridView}
-      tableView={TableView}
-      loading={loading}
-      options={options}
+    <ItemsPage
+      title="Favorites"
+      endpoint={API_ENDPOINTS.ITEMS}
+      options={favoritesOptions}
     />
   );
 };

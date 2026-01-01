@@ -1,7 +1,6 @@
 import { Table } from "@mantine/core";
 import type { Item, MenuOption } from "~/types";
-import { formatDateTime } from "~/utils";
-import { FolderActions } from "../FolderActions";
+import { ItemRow } from "./ItemRow";
 
 export interface TableViewProps {
   items?: Item[];
@@ -9,19 +8,6 @@ export interface TableViewProps {
 }
 
 export const TableView = ({ items, options }: TableViewProps) => {
-  const rows = items?.map((item) => (
-    <Table.Tr key={item.id}>
-      <Table.Td>{item.id}</Table.Td>
-      <Table.Td>{item.name}</Table.Td>
-      <Table.Td>{item.type}</Table.Td>
-      <Table.Td>{formatDateTime(item.createdAt)}</Table.Td>
-      <Table.Td>{formatDateTime(item.updatedAt)}</Table.Td>
-      <Table.Td>
-        <FolderActions item={item} options={options} />
-      </Table.Td>
-    </Table.Tr>
-  ));
-
   return (
     <Table>
       <Table.Thead>
@@ -35,7 +21,11 @@ export const TableView = ({ items, options }: TableViewProps) => {
         </Table.Tr>
       </Table.Thead>
 
-      <Table.Tbody>{rows}</Table.Tbody>
+      <Table.Tbody>
+        {items?.map((item) => (
+          <ItemRow key={item.id} item={item} options={options} />
+        ))}
+      </Table.Tbody>
     </Table>
   );
 };
