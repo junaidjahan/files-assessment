@@ -1,29 +1,13 @@
 import { Table } from "@mantine/core";
-import { FolderActions } from "../FolderActions";
+import type { Item, MenuOption } from "~/types";
+import { ItemRow } from "./ItemRow";
 
-export const TableView = ({ items, options }) => {
-  const rows = items.map((item) => (
-    <Table.Tr key={item.id}>
-      <Table.Td>{item.id}</Table.Td>
-      <Table.Td>{item.name}</Table.Td>
-      <Table.Td>{item.type}</Table.Td>
-      <Table.Td>
-        {new Date(item.updatedAt).toLocaleDateString("en-US")} at{" "}
-        {new Date(item.updatedAt).toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-        })}
-      </Table.Td>
-      <Table.Td>{item.updatedAt}</Table.Td>
-      <Table.Td>
-        <Table.Td>
-          <FolderActions item={item} options={options} />
-        </Table.Td>
-      </Table.Td>
-    </Table.Tr>
-  ));
+export interface TableViewProps {
+  items?: Item[];
+  options?: MenuOption[];
+}
 
+export const TableView = ({ items, options }: TableViewProps) => {
   return (
     <Table>
       <Table.Thead>
@@ -37,7 +21,11 @@ export const TableView = ({ items, options }) => {
         </Table.Tr>
       </Table.Thead>
 
-      <Table.Tbody>{rows}</Table.Tbody>
+      <Table.Tbody>
+        {items?.map((item) => (
+          <ItemRow key={item.id} item={item} options={options} />
+        ))}
+      </Table.Tbody>
     </Table>
   );
 };

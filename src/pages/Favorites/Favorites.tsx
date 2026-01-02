@@ -1,52 +1,42 @@
-import { useEffect, useState } from "react";
-import { Folder } from "~/components";
-import { GridView, TableView } from "~/components/Folder/View";
+import { ItemsPage } from "~/components";
+import { API_ENDPOINTS } from "~/constants";
+import type { Item, MenuOption } from "~/types";
+
+const favoritesOptions: MenuOption[] = [
+  {
+    label: "Remove from Favorites",
+    onClick(item?: Item) {
+      if (item) {
+        alert(`${item.name} removed from Favorites`);
+      }
+    },
+  },
+  {
+    label: "Open item location",
+    onClick() {
+      alert("Opened");
+    },
+  },
+  {
+    label: "Share",
+    onClick() {
+      alert("Shared");
+    },
+  },
+  {
+    label: "Delete",
+    onClick() {
+      alert("Deleted");
+    },
+  },
+];
 
 export const Favorites = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch("/items.json")
-      .then((res) => {
-        return res.json();
-      })
-      .then((result) => {
-        setData(result.items);
-      });
-  }, [{}]);
-
   return (
-    <Folder
-      navTitle="Favorites"
-      data={data}
-      gridView={GridView}
-      tableView={TableView}
-      options={[
-        {
-          label: "Remove from Favorites",
-          onClick(item: any) {
-            alert(`${item.name} removed from Favorites`);
-          },
-        },
-        {
-          label: "Open item location",
-          onClick() {
-            alert("Opened");
-          },
-        },
-        {
-          label: "Share",
-          onClick() {
-            alert("Shared");
-          },
-        },
-        {
-          label: "Delete",
-          onClick(item: unknown) {
-            alert("Deleted");
-          },
-        },
-      ]}
+    <ItemsPage
+      title="Favorites"
+      endpoint={API_ENDPOINTS.ITEMS}
+      options={favoritesOptions}
     />
   );
 };
