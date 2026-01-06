@@ -1,2 +1,1 @@
 export * from "./FolderV2";
-export * from "./Sidebar";

@@ -1,13 +1,7 @@
 import { Table } from "@mantine/core";
-import type { Item, MenuOption } from "~/types";
-import { ItemRow } from "./ItemRow";
+import { memo, type PropsWithChildren } from "react";
 
-export interface TableViewProps {
-  items?: Item[];
-  options?: MenuOption[];
-}
-
-export const TableView = ({ items, options }: TableViewProps) => {
+export const FolderV2TableView = memo<PropsWithChildren>(({ children }) => {
   return (
     <Table>
       <Table.Thead>
@@ -21,11 +15,7 @@ export const TableView = ({ items, options }: TableViewProps) => {
         </Table.Tr>
       </Table.Thead>
 
-      <Table.Tbody>
-        {items?.map((item) => (
-          <ItemRow key={item.id} item={item} options={options} />
-        ))}
-      </Table.Tbody>
+      <Table.Tbody>{children}</Table.Tbody>
     </Table>
   );
-};
+});

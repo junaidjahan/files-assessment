@@ -1,15 +1,15 @@
 import { ActionIcon, Paper, Text } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
-import { useEffect, useRef, useState } from "react";
-import type { Item, MenuOption } from "~/types";
+import { memo, useEffect, useRef, useState } from "react";
 import { Z_INDEX } from "~/constants";
+import type { Item, MenuOption } from "~/types";
 
-export interface FolderActionsProps {
+export type FolderV2ActionsProps = {
   item: Item;
   options?: MenuOption[];
-}
+};
 
-export const FolderActions = ({ item, options }: FolderActionsProps) => {
+export const FolderV2Actions = memo<FolderV2ActionsProps>(({ item, options }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -84,4 +84,4 @@ export const FolderActions = ({ item, options }: FolderActionsProps) => {
       )}
     </div>
   );
-};
+});
