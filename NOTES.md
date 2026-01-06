@@ -35,7 +35,7 @@ Approximately 5-6 hours
 
 ## What I Changed and Why
 
-### 1. **Component Architecture Refactor** (FolderV2)
+### 1. **Component Architecture Refactor** (Folder)
 **Changed**: Refactored monolithic `Folder` component into a composable compound component pattern.
 
 **Why**:
@@ -46,15 +46,15 @@ Approximately 5-6 hours
 - Follows React best practices for component composition
 
 **Files Created**:
-- [FolderV2.tsx](src/components/FolderV2/FolderV2.tsx) - Main compound component
-- [FolderV2Actions.tsx](src/components/FolderV2/Actions/FolderV2Actions.tsx) - Dropdown menu
-- [FolderV2Navigation.tsx](src/components/FolderV2/Navigation/FolderV2Navigation.tsx) - Breadcrumb navigation
-- [FolderV2Tabs.tsx](src/components/FolderV2/Tabs/FolderV2Tabs.tsx) - Tab switcher
-- [FolderV2View.tsx](src/components/FolderV2/View/FolderV2View.tsx) - View container
-- [FolderV2ViewItem.tsx](src/components/FolderV2/View/Item/FolderV2ViewItem.tsx) - Dynamic view item renderer
-- [FolderV2GridViewCard.tsx](src/components/FolderV2/View/Grid/FolderV2GridViewCard.tsx) - Grid card
-- [FolderV2TableViewRow.tsx](src/components/FolderV2/View/Table/FolderV2TableViewRow.tsx) - Table row
-- [FolderV2SkeletonLoader.tsx](src/components/FolderV2/SkeletonLoader/FolderV2SkeletonLoader.tsx) - Loading state
+- [Folder.tsx](src/components/Folder/Folder.tsx) - Main compound component
+- [FolderActions.tsx](src/components/Folder/Actions/FolderActions.tsx) - Dropdown menu
+- [FolderNavigation.tsx](src/components/Folder/Navigation/FolderNavigation.tsx) - Breadcrumb navigation
+- [FolderTabs.tsx](src/components/Folder/Tabs/FolderTabs.tsx) - Tab switcher
+- [FolderView.tsx](src/components/Folder/View/FolderView.tsx) - View container
+- [FolderViewItem.tsx](src/components/Folder/View/Item/FolderViewItem.tsx) - Dynamic view item renderer
+- [FolderGridViewCard.tsx](src/components/Folder/View/Grid/FolderGridViewCard.tsx) - Grid card
+- [FolderTableViewRow.tsx](src/components/Folder/View/Table/FolderTableViewRow.tsx) - Table row
+- [FolderSkeletonLoader.tsx](src/components/Folder/SkeletonLoader/FolderSkeletonLoader.tsx) - Loading state
 
 ### 2. **State Management with Jotai**
 **Added**: Jotai for lightweight global state management.
@@ -141,7 +141,7 @@ Approximately 5-6 hours
 - Now only adds listener when dropdown is open
 - Proper cleanup in useEffect return function
 
-**Location**: [FolderV2Actions.tsx:16-30](src/components/FolderV2/Actions/FolderV2Actions.tsx#L16-L30)
+**Location**: [FolderActions.tsx:16-30](src/components/Folder/Actions/FolderActions.tsx#L16-L30)
 
 ### 9. **Performance Optimizations**
 **Added**:
@@ -225,7 +225,7 @@ Approximately 5-6 hours
 
 3. **Testing**
    - Add unit tests for utility functions
-   - Add component tests for FolderV2 sub-components
+   - Add component tests for Folder sub-components
    - Add integration tests for page components
    - Test error states and edge cases
 

@@ -1,4 +1,4 @@
-import { FolderV2 } from "~/components/FolderV2";
+import { Folder } from "~/components/Folder";
 import { API_ENDPOINTS } from "~/constants";
 import { useItems } from "~/hooks";
 import type { Item, MenuOption } from "~/types";
@@ -36,20 +36,20 @@ export const Favorites = () => {
   const { data, loading } = useItems(API_ENDPOINTS.FAVORITES);
 
   if (loading) {
-    return <FolderV2.SkeletonLoader />;
+    return <Folder.SkeletonLoader />;
   }
 
   return (
-    <FolderV2>
-      <FolderV2.Navigation title="Favorites" />
+    <Folder>
+      <Folder.Navigation title="Favorites" />
 
-      <FolderV2.Tabs>
-        <FolderV2.View>
+      <Folder.Tabs>
+        <Folder.View>
           {data.map((item) => (
-            <FolderV2.ViewItem item={item} actions={<FolderV2.Actions item={item} options={favoritesOptions} />} />
+            <Folder.ViewItem item={item} actions={<Folder.Actions item={item} options={favoritesOptions} />} />
           ))}
-        </FolderV2.View>
-      </FolderV2.Tabs>
-    </FolderV2>
+        </Folder.View>
+      </Folder.Tabs>
+    </Folder>
   );
 };

@@ -1,5 +1,5 @@
 import { Virtuoso } from "react-virtuoso";
-import { FolderV2 } from "~/components/FolderV2";
+import { Folder } from "~/components/Folder";
 import { API_ENDPOINTS } from "~/constants";
 import { useItems } from "~/hooks";
 import type { MenuOption } from "~/types";
@@ -29,25 +29,25 @@ export const Homepage = () => {
   const { data, loading } = useItems(API_ENDPOINTS.ITEMS);
 
   if (loading) {
-    return <FolderV2.SkeletonLoader />;
+    return <Folder.SkeletonLoader />;
   }
 
   return (
-    <FolderV2>
-      <FolderV2.Navigation title="Homepage" />
+    <Folder>
+      <Folder.Navigation title="Homepage" />
 
-      <FolderV2.Tabs>
-        <FolderV2.View>
+      <Folder.Tabs>
+        <Folder.View>
           {data.map((item) => (
-            <FolderV2.ViewItem
+            <Folder.ViewItem
               item={item}
               actions={
-                <FolderV2.Actions item={item} options={homepageOptions} />
+                <Folder.Actions item={item} options={homepageOptions} />
               }
             />
           ))}
-        </FolderV2.View>
-      </FolderV2.Tabs>
-    </FolderV2>
+        </Folder.View>
+      </Folder.Tabs>
+    </Folder>
   );
 };
