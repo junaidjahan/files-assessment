@@ -1,46 +1,53 @@
-import { useEffect, useState } from "react";
-import { Folder } from "~/components";
-import { GridView, TableView } from "~/components/Folder/View/";
+import { Virtuoso } from "react-virtuoso";
+import { Folder } from "~/components/Folder";
+import { API_ENDPOINTS } from "~/constants";
+import { useItems } from "~/hooks";
+import type { MenuOption } from "~/types";
+
+const homepageOptions: MenuOption[] = [
+  {
+    label: "Mark as Favorite",
+    onClick() {
+      alert("Marked as Favorite");
+    },
+  },
+  {
+    label: "Share",
+    onClick() {
+      alert("Shared");
+    },
+  },
+  {
+    label: "Delete",
+    onClick() {
+      alert("Deleted");
+    },
+  },
+];
 
 export const Homepage = () => {
-  const [data, setData] = useState([]);
+  const { data, loading } = useItems(API_ENDPOINTS.ITEMS);
 
-  useEffect(() => {
-    fetch("/items.json")
-      .then((res) => {
-        return res.json();
-      })
-      .then((result) => {
-        setData(result.items);
-      });
-  }, [{}]);
+  if (loading) {
+    return <Folder.SkeletonLoader />;
+  }
 
   return (
-    <Folder
-      navTitle="Homepage"
-      data={data}
-      gridView={GridView}
-      tableView={TableView}
-      options={[
-        {
-          label: "Mark as Favorite",
-          onClick() {
-            alert("Marked as Favorite");
-          },
-        },
-        {
-          label: "Share",
-          onClick() {
-            alert("Shared");
-          },
-        },
-        {
-          label: "Delete",
-          onClick() {
-            alert("Deleted");
-          },
-        },
-      ]}
-    />
+    <Folder>
+      <Folder.Navigation title="Homepage" />
+
+      <Folder.Tabs>
+        <Folder.View>
+          {data.map((item) => (
+            <Folder.ViewItem
+              item={item}
+              actions={
+                <Folder.Actions item={item} options={homepageOptions} />
+              }
+            />
+          ))}
+        </Folder.View>
+      </Folder.Tabs>
+    </Folder>
   );
 };

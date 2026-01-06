@@ -1,50 +1,22 @@
-import { Paper, Stack, Tabs } from "@mantine/core";
-import { useEffect, useState, type FC } from "react";
-import { FolderNavigation } from "./FolderNavigation";
+import { createStore, Provider } from "jotai";
+import { memo, type PropsWithChildren } from "react";
+import { FolderActions } from "./Actions";
+import { FolderNavigation } from "./Navigation";
+import { FolderSkeletonLoader } from "./SkeletonLoader";
+import { FolderTabs } from "./Tabs";
+import { FolderView, FolderViewItem } from "./View";
 
-type Item = {
-  id: number;
-  name: string;
-  type: string;
-  createdAt: string;
-  updatedAt: string;
-};
+const store = createStore();
 
-export const Folder = (props: {
-  data: Array<Item>;
-  navTitle: string;
-  gridView: FC<any>;
-  tableView: FC<any>;
-  options?: Array<{ label: string; onClick: Function }>;
-}) => {
-  const [data, setData] = useState<any>();
-  const [activeTab, setActiveTab] = useState("grid");
+const _Folder = memo<PropsWithChildren>(({ children }) => {
+  return <Provider store={store}>{children}</Provider>;
+});
 
-  useEffect(() => {
-    setData(props.data);
-  }, [props]);
-
-  let ViewComponent: any;
-  if (activeTab === "grid") {
-    ViewComponent = props.gridView;
-  } else {
-    ViewComponent = props.tableView;
-  }
-
-  return (
-    <Paper p="md" style={{ margin: 20 }}>
-      <FolderNavigation title={props.navTitle} />
-
-      <Tabs value={activeTab} onChange={(val) => setActiveTab(val as any)} style={{ marginTop: 20, marginBottom: 20 }}>
-        <Tabs.List>
-          <Tabs.Tab value="grid">Grid View</Tabs.Tab>
-          <Tabs.Tab value="table">Table View</Tabs.Tab>
-        </Tabs.List>
-      </Tabs>
-
-      <Stack>
-        <ViewComponent items={data} options={props.options} />
-      </Stack>
-    </Paper>
-  );
-};
+export const Folder = Object.assign(_Folder, {
+  Actions: FolderActions,
+  Navigation: FolderNavigation,
+  View: FolderView,
+  ViewItem: FolderViewItem,
+  SkeletonLoader: FolderSkeletonLoader,
+  Tabs: FolderTabs,
+});
