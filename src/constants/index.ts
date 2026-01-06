@@ -1,6 +1,6 @@
 export const API_ENDPOINTS = {
-  ITEMS: '/items.json',
-  FAVORITES: '/favorites.json',
+  ITEMS: "/items.json",
+  FAVORITES: "/favorites.json",
 } as const;
 
 export const LAYOUT = {
@@ -15,6 +15,6 @@ export const Z_INDEX = {
 } as const;
 
 export const VIEW_TABS = {
-  GRID: 'grid',
-  TABLE: 'table',
+  GRID: "grid",
+  TABLE: "table",
 } as const;
